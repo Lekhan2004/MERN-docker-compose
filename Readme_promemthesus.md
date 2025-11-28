@@ -24,6 +24,16 @@ helm install grafana grafana/grafana -n monitoring
 ```
 
 Note: Make sure you have metadata for both cases 
+If not add this into k8s
+
+```sh
+metadata:
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/metrics"
+    prometheus.io/port: "5050"
+
+```
 
 Get Graphana Admin Pass
 
