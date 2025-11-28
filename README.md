@@ -1,5 +1,42 @@
 # A simple MERN stack application 
 
+# Read this 1st
+
+In main branch the code is related to docker and docker compose 
+
+```sh
+git checkout main
+```
+
+# When you want to Kubernetize
+Go to kuber/k8s branch 
+
+```sh
+git checkout kuber/k8s
+```
+
+Instead of:
+    docker run for each container
+
+You use:
+
+    ```sh 
+    kubectl apply -f *.yml
+    ``` 
+    to create/update Deployments, Services, PVCs
+
+    ```sh
+    kubectl get pods,svc,deploy
+    ```
+    to inspect
+
+Kubernetes handles:
+
+    1. Scheduling Pods on nodes
+    2. Restarting failed containers
+    3. Rolling updates (kubectl set image or change Deployment image and re-apply)
+    4. Scaling (kubectl scale deployment api --replicas=4)
+
 ### Create a network for the docker containers
 
 `docker network create demo`
