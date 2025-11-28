@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mern-ingress
+  annotations:
+    # This annotation is crucial for NGINX to handle traffic correctly
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  ingressClassName: nginx # Explicitly uses the NGINX Ingress Controller
+  rules:
+  - host: mern-app.local # Use a fake hostname for simple local access
+    http:
+      paths:
+      # 1. Backend API Route (All requests starting with /api/)
+      - path: /api/(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: backend-service # Name of the Service defined in backend.yaml
+            port:
+              number: 5050
+      
+      # 2. Frontend Catch-all Route (All other requests)
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-service # Name of the Service defined in frontend.yaml
+            port:
+              number: 80 # Nginx port 80 is routing to the frontend's targetPort 5173
